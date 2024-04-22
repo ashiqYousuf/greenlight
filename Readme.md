@@ -1,1 +1,1 @@
-# Greenlight :- A dump open source movies API
+# Greenlight :- A dumb open source movies API
