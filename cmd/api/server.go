@@ -20,7 +20,7 @@ func (app *application) serve() error {
 		WriteTimeout: 30 * time.Second,
 	}
 
-	showdownError := make(chan error)
+	shutdownError := make(chan error)
 
 	go func() {
 		// Use signal.Notify() to listen for incoming SIGINT and SIGTERM signals
@@ -33,10 +33,20 @@ func (app *application) serve() error {
 			"signal": s.String(),
 		})
 
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 		defer cancel()
 
-		showdownError <- srv.Shutdown(ctx)
+		err := srv.Shutdown(ctx)
+		if err != nil {
+			shutdownError <- err
+		}
+
+		app.logger.PrintInfo("completing background tasks", map[string]string{
+			"addr": srv.Addr,
+		})
+
+		app.wg.Wait()
+		shutdownError <- nil
 	}()
 
 	app.logger.PrintInfo("starting server", map[string]string{
@@ -49,7 +59,7 @@ func (app *application) serve() error {
 		return err
 	}
 
-	err = <-showdownError
+	err = <-shutdownError
 	if err != nil {
 		// if there's a problem with the graceful shutdown
 		return err
