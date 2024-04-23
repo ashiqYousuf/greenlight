@@ -57,7 +57,7 @@ func (p *password) Matches(plaintextPassword string) (bool, error) {
 
 func ValidateEmail(v *validator.Validator, email string) {
 	v.Check(email != "", "email", "must be provided")
-	v.Check(validator.Matches("email", validator.EmailRX), "email", "must be a valid email address")
+	v.Check(validator.Matches(email, validator.EmailRX), "email", "must be a valid email address")
 }
 
 func ValidatePasswordPlaintext(v *validator.Validator, password string) {
@@ -89,7 +89,7 @@ type UserModel struct {
 func (m UserModel) Insert(user *User) error {
 	query := `INSERT INTO users (name, email, password_hash, activated)
 	VALUES ($1, $2, $3, $4)
-	RETURNING id, created, version`
+	RETURNING id, created_at, version`
 
 	args := []interface{}{user.Name, user.Email, user.Password.hash, user.Activated}
 
