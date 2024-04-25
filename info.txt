@@ -1,0 +1,40 @@
+OPEN CONNECTIOSN = [IN-USE + IDLE] connections
+
+Generating pair of migration files:-
+migrate create -seq -ext=.sql -dir=./migrations migration_file_name
+
+up migration files:- for implementing the changes
+down migration files:- for rollbacking the changes
+
+Migrate:-
+migrate -path=./migrations -database=$GREENLIGHT_DB_DSN up
+
+Get migration version your DB is currently on:-
+migrate -path=./migrations -database=$GREENLIGHT_DB_DSN version
+
+You can also migrate up or down to a specific version by using the goto command:
+migrate -path=./migrations -database=$GREENLIGHT_DB_DSN goto 1
+
+DB model <--> Data Access or Storage Layer
+
+Multipe requests:-
+xargs -I % -P8 curl -X PATCH -d '{"runtime": "97 mins"}' "localhost:4000/v1/movies/4" < <(printf '%s\n' {1..8})
+
+
+GRACEFUL SHUTDOWN:-
+when we receive a SIGINT or SIGTERM signal, we instruct our server
+to stop accepting any new HTTP requests, and give any in-flight requests a ‘grace period’ of 5
+seconds to complete before the application is terminated.
+
+
+psql always displays values in bytea columns as a hex-encoded
+string.
+
+The relationship between permissions and users is a great example of a many-to-many
+relationship. One user may have many permissions, and the same permission may belong tomany users.
+
+
+CORS:-
+The preflight requests always have three components:
+the HTTP method OPTIONS , an Origin header, and an Access-Control-Request-Method
+header.
