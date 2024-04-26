@@ -1,0 +1,15 @@
+### Packaging Go Application
+
+1. The go mod tidy command will make sure the go.mod and go.sum files list all the
+necessary dependencies for our project (and no unnecessary ones).
+
+2. The go mod verify command will verify that the dependencies stored in your module
+cache (located on your machine at $GOPATH/pkg/mod ) match the cryptographic hashes in
+the go.sum file.
+
+3. The go mod vendor command will then copy the necessary source code from your
+module cache into a new vendor directory in your project root.
+
+4. Now, when you run a command such as go run , go test or go build , the go tool will
+recognize the presence of a vendor folder and the dependency code in the vendor folder will
+be used — rather than the code in the module cache on your local machine.

@@ -38,3 +38,7 @@ CORS:-
 The preflight requests always have three components:
 the HTTP method OPTIONS , an Origin header, and an Access-Control-Request-Method
 header.
+
+Vendoring:-
+Vendoring dependencies in this way basically stores a complete
+copy of the source code for third-party packages in a vendor folder in your project.
