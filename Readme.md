@@ -10,28 +10,40 @@
 
 * Install Deps using `go get`
 
-* Replicating env, run the following command to check for command line variables:-
-
-`
-./bin/api -help
-`
-
 * The Makefile in the root directory of the project will guide you for configuration. Run the following command, make sure you are in the root dir (greenlight):-
 <br><br>
 `
-make help
+$ make help
 `
 
 * Add the following variables to your .envrc file (in the root dir):-
 
-export GREENLIGHT_DB_DSN=postgres://user:password@host/db
+    * export GREENLIGHT_DB_DSN=postgres://user:password@host/db
 
-export SMTP_HOST=sandbox.smtp.mailtrap.io (any mail hosting service)
+    * export SMTP_HOST=sandbox.smtp.mailtrap.io (any mail hosting service)
 
-Add the following credentials from your smtp service provider
+    Add the following credentials from your smtp service provider
 
-export SMTP_USER=2yr23fhfkjnfk
+    * export SMTP_USER=2yr23fhfkjnfk
 
-export SMTP_PASSWORD=wndlfn3j2oi2
+    * export SMTP_PASSWORD=wndlfn3j2oi2
 
-export SMTP_PORT=2525
+    * export SMTP_PORT=2525
+
+* Getting to know about about env flags:-
+
+`
+    $ go run ./cmd/api -help
+`
+
+* Running the project locally:-
+
+`
+    $ go run ./cmd/api --flags
+`
+
+or
+
+`
+    $ make run/api
+`
