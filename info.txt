@@ -15,13 +15,13 @@ migrate -path=./migrations -database=$GREENLIGHT_DB_DSN version
 You can also migrate up or down to a specific version by using the goto command:
 migrate -path=./migrations -database=$GREENLIGHT_DB_DSN goto 1
 
-DB model <--> Data Access or Storage Layer
+DB models or Data Access Layer or Storage Layer
 
-Multipe requests:-
+Multipe requests:
 xargs -I % -P8 curl -X PATCH -d '{"runtime": "97 mins"}' "localhost:4000/v1/movies/4" < <(printf '%s\n' {1..8})
 
 
-GRACEFUL SHUTDOWN:-
+GRACEFUL SHUTDOWN:
 when we receive a SIGINT or SIGTERM signal, we instruct our server
 to stop accepting any new HTTP requests, and give any in-flight requests a ‘grace period’ of 5
 seconds to complete before the application is terminated.
