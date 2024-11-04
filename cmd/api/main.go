@@ -78,7 +78,7 @@ func main() {
 	flag.IntVar(&cfg.smtp.port, "smtp-port", 2525, "SMTP port")
 	flag.StringVar(&cfg.smtp.username, "smtp-username", "", "SMTP username")
 	flag.StringVar(&cfg.smtp.password, "smtp-password", "", "SMTP password")
-	// !must be a valid sender
+	// must be a valid sender
 	flag.StringVar(&cfg.smtp.sender, "smtp-sender", "ashiq.ttw@gmail.com", "SMTP sender")
 
 	flag.Func("cors-trusted-origins", "Trusted CORS origins (space seperated)", func(val string) error {
@@ -138,15 +138,16 @@ func openDB(cfg config) (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	// Max open db connections in a pool
 	db.SetMaxOpenConns(cfg.db.maxOpenConns)
+	// Max idle db connections from a pool
 	db.SetMaxIdleConns(cfg.db.maxIdleConns)
 
 	duration, err := time.ParseDuration(cfg.db.maxIdleTime)
 	if err != nil {
 		return nil, err
 	}
-
+	// Max idle connection life before expiry
 	db.SetConnMaxIdleTime(duration)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
