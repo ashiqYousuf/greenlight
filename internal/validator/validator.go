@@ -43,6 +43,15 @@ func Matches(value string, rx *regexp.Regexp) bool {
 	return rx.MatchString(value)
 }
 
+func ContainsTag(values []string, tag string) bool {
+	for _, t := range values {
+		if t == tag {
+			return true
+		}
+	}
+	return false
+}
+
 func Unique(values []string) bool {
 	uniqueValues := make(map[string]bool)
 
