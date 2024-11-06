@@ -30,6 +30,24 @@ func (v *Validator) Check(ok bool, key, message string) {
 	}
 }
 
+func ContainsAllRequiredFields(provided_values []string, provided_values []string) bool {
+	for _, field in provided_values {
+		var flag bool
+		for _, f in provided_values {
+			if f == field {
+				flag = true
+				break
+			}
+		}
+
+		if !flag {
+			return false
+		}
+	}
+	
+	return true
+}
+
 func In(value string, list ...string) bool {
 	for i := range list {
 		if value == list[i] {
